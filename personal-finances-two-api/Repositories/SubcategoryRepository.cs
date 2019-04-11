@@ -52,6 +52,18 @@ namespace personal_finances_two_api.Repositories
         }
 
         /// <summary>
+        /// Get all subcategories by category Id
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Subcategory> GetByCategory (int categoryId)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                return context.Subcategories.Where(s => s.CategoryId.Equals(categoryId) && s.Enabled).ToList();
+            }
+        }
+
+        /// <summary>
         /// Insert a subcategory
         /// </summary>
         /// <param name="subcategory"></param>

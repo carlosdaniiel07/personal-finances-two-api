@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 using personal_finances_two_api.Models.Enums;
 
@@ -21,6 +22,7 @@ namespace personal_finances_two_api.Models
 
         public bool Closed { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public InvoiceStatus InvoiceStatus { get; set; }
         
         public CreditCard CreditCard { get; set; }

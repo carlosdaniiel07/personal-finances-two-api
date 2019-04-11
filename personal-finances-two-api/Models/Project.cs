@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 using personal_finances_two_api.Models.Enums;
 
@@ -25,6 +26,7 @@ namespace personal_finances_two_api.Models
         [StringLength(100)]
         public string Description { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ProjectStatus ProjectStatus { get; set; }
 
         public bool Enabled { get; set; }

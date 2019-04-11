@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 using personal_finances_two_api.Models.Enums;
 
@@ -37,6 +38,7 @@ namespace personal_finances_two_api.Models
         public DateTime AccountingDate { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public TransferStatus TransferStatus { get; set; }
 
         public bool AutomaticallyLaunch { get; set; }

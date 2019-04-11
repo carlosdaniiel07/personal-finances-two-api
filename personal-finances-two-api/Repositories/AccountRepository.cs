@@ -46,6 +46,19 @@ namespace personal_finances_two_api.Repositories
         }
 
         /// <summary>
+        /// Get an account by Name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Account Get (string name)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                return context.Accounts.SingleOrDefault(a => a.Name.Equals(name) && a.Enabled);
+            }
+        }
+
+        /// <summary>
         /// Insert a new account
         /// </summary>
         /// <param name="account">An account to be inserted</param>

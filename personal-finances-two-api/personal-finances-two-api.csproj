@@ -148,6 +148,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904080523219_FirstMigration.cs" />
+    <Compile Include="Migrations\201904080523219_FirstMigration.Designer.cs">
+      <DependentUpon>201904080523219_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account .cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -173,6 +178,9 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\CreditCardService.cs" />
+    <Compile Include="Services\Exceptions\InvalidOperationException.cs" />
+    <Compile Include="Services\Exceptions\ObjectAlreadyExistsException.cs" />
+    <Compile Include="Services\Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Services\MovementService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\SubcategoryService.cs" />
@@ -194,6 +202,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\api-personal-finances-two - Web Deploy.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904080523219_FirstMigration.resx">
+      <DependentUpon>201904080523219_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

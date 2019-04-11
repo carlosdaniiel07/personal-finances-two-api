@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,7 @@ namespace personal_finances_two_api.Models
         public string Name { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public AccountType AccountType { get; set; }
 
         [Required]

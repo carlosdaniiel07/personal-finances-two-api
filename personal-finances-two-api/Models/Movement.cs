@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 using personal_finances_two_api.Models.Enums;
 
@@ -58,6 +59,7 @@ namespace personal_finances_two_api.Models
         public int? InvoiceId { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public MovementStatus MovementStatus { get; set; }
 
         public string Observation { get; set; }
