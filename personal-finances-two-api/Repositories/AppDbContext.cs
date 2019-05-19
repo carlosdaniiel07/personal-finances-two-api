@@ -15,6 +15,8 @@ namespace personal_finances_two_api.Repositories
         public DbSet<Project> Projects { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<AccessLog> AccessLogs { get; set; }
 
         public AppDbContext() : base("ConnectionString")
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
@@ -6,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 using personal_finances_two_api.Models.Enums;
+using personal_finances_two_api.Services;
 
 namespace personal_finances_two_api.Models
 {
@@ -33,5 +35,13 @@ namespace personal_finances_two_api.Models
 
         [JsonIgnore]
         public ICollection<Movement> Movements { get; set; } = new List<Movement>();
+
+        public double TotalValue
+        {
+            get
+            {
+                return (new InvoiceService().GetMovements(Id).Sum(m => m.TotalValue));
+            }
+        }
     }
 }

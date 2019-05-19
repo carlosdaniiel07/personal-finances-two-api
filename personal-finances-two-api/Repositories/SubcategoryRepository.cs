@@ -37,6 +37,20 @@ namespace personal_finances_two_api.Repositories
         }
 
         /// <summary>
+        /// Get all subcategories by Name and by category Id
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Subcategory> GetAll(string name, int categoryId)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                return context.Subcategories
+                    .Include(s => s.Category)
+                .Where(s => s.Name.Equals(name) && s.CategoryId.Equals(categoryId) && s.Enabled).ToList();
+            }
+        }
+
+        /// <summary>
         /// Get a subcategory by Id
         /// </summary>
         /// <param name="id"></param>
@@ -85,6 +99,20 @@ namespace personal_finances_two_api.Repositories
             using (AppDbContext context = new AppDbContext())
             {
                 context.Entry(subcategory).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Update a collection of subcategory
+        /// </summary>
+        /// <param name="subcategory"></param>
+        public void Update(IEnumerable<Subcategory> subcategories)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                foreach (var subcategory in subcategories)
+                    context.Entry(subcategory).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

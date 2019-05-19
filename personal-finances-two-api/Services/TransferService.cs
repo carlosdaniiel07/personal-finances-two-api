@@ -2,21 +2,27 @@
 
 using personal_finances_two_api.Models;
 using personal_finances_two_api.Repositories;
+using personal_finances_two_api.Services.Exceptions;
 
 namespace personal_finances_two_api.Services
 {
-    public class SubcategoryService
+    public class TransferService
     {
-        private SubcategoryRepository _repository = new SubcategoryRepository();
+        private TransferRepository _repository = new TransferRepository();
 
-        public IEnumerable<Subcategory> GetAll ()
+        public IEnumerable<Transfer> GetAll ()
         {
             return _repository.GetAll();
         }
 
-        public Subcategory Get(int id)
+        public Transfer Get(int id)
         {
-            return _repository.Get(id);
+            var obj = _repository.Get(id);
+
+            if (obj != null)
+                return obj;
+            else
+                throw new ObjectNotFoundException($"Not found a transfer with ID {id}");
         }
     }
 }

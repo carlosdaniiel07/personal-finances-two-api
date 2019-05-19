@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net;
 
 using System.Web.Http;
 
@@ -11,6 +9,7 @@ using personal_finances_two_api.Services.Exceptions;
 
 namespace personal_finances_two_api.Controllers
 {
+    [AuthenticationFilter]
     [RoutePrefix("api/accounts")]
     public class AccountsController : ApiController
     {
@@ -64,6 +63,21 @@ namespace personal_finances_two_api.Controllers
                 return Ok();
             }
             catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public IHttpActionResult DeleteAccount (int id)
+        {
+            try
+            {
+                _service.Delete(id);
+                return Ok();
+            }
+            catch (ObjectNotFoundException e)
             {
                 return BadRequest(e.Message);
             }

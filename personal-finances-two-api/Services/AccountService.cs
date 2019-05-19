@@ -28,6 +28,14 @@ namespace personal_finances_two_api.Services
                 throw new ObjectNotFoundException($"Not found an account with ID {id}");
         }
 
+        public Account Get (int id, bool canBeDisabledAccount)
+        {
+            if (canBeDisabledAccount)
+                return _repository.Get(id, true);
+            else
+                return Get(id);
+        }
+
         public IEnumerable<Movement> GetMovements (int accountId)
         {
             return _movementRepository.GetByAccount(accountId);
@@ -58,6 +66,29 @@ namespace personal_finances_two_api.Services
                 _repository.Update(account);
             else
                 throw new ObjectAlreadyExistsException($"Already exists an account with the name {account.Name}");
+        }
+
+        public void Delete (int id)
+        {
+            var account = Get(id);
+
+            account.Enabled = false;
+
+            _repository.Update(account);
+        }
+
+        public void AdjustBalance (int accountId)
+        {
+            // get an account (can be a disabled account)
+            var account = Get(accountId, true);
+
+            var accountMovements = _movementRepository.GetByAccount(accountId);
+            var newBalance = (account.InitialBalance + MovementService.TotalCredit(accountMovements.Where(m => m.Invoice == null))) 
+                - MovementService.TotalDebit(accountMovements.Where(m => m.Invoice == null));
+
+            account.Balance = newBalance;
+
+            _repository.Update(account);
         }
     }
 }

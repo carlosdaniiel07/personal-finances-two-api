@@ -33,6 +33,18 @@ namespace personal_finances_two_api.Repositories
         }
 
         /// <summary>
+        /// Get all categories by Name and Type
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Category> GetAll(string name, string type)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                return context.Categories.Where(c => c.Name.Equals(name) &&  c.Type.Equals(type) && c.Enabled).ToList();
+            }
+        }
+
+        /// <summary>
         /// Get a category by Id
         /// </summary>
         /// <param name="id"></param>

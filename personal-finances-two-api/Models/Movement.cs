@@ -33,29 +33,24 @@ namespace personal_finances_two_api.Models
         public Account Account { get; set; }
 
         [Required]
-        [JsonIgnore]
         public int AccountId { get; set; }
 
         public Category Category { get; set; }
 
         [Required]
-        [JsonIgnore]
         public int CategoryId { get; set; }
 
         public Subcategory Subcategory { get; set; }
 
         [Required]
-        [JsonIgnore]
         public int SubcategoryId { get; set; }
 
         public Project Project { get; set; }
 
-        [JsonIgnore]
         public int? ProjectId { get; set; }
 
         public Invoice Invoice { get; set; }
 
-        [JsonIgnore]
         public int? InvoiceId { get; set; }
 
         [Required]
@@ -67,5 +62,13 @@ namespace personal_finances_two_api.Models
         public bool CanEdit { get; set; }
         
         public bool AutomaticallyLaunch { get; set; }
+
+        public double TotalValue
+        {
+            get
+            {
+                return (Value + Increase.GetValueOrDefault()) - Decrease.GetValueOrDefault();
+            }
+        }
     }
 }

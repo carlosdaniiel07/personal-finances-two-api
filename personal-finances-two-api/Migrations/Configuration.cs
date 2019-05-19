@@ -1,9 +1,9 @@
 namespace personal_finances_two_api.Migrations
 {
-    using System;
-    using System.Data.Entity;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
-    using System.Linq;
+
+    using personal_finances_two_api.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<personal_finances_two_api.Repositories.AppDbContext>
     {
@@ -12,12 +12,24 @@ namespace personal_finances_two_api.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(personal_finances_two_api.Repositories.AppDbContext context)
+        protected override void Seed(Repositories.AppDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            //var creditCardSubcategory = new Subcategory
+            //{
+            //    Name = "Credit card",
+            //    CanEdit = false,
+            //    Enabled = true,
+            //    Category = new Category
+            //    {
+            //        Type = "D",
+            //        Name = "Payment",
+            //        CanEdit = false,
+            //        Enabled = true,
+            //    }
+            //};
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            //context.Subcategories.Add(creditCardSubcategory);
+            //context.SaveChanges();
         }
     }
 }

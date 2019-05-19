@@ -16,7 +16,6 @@ namespace personal_finances_two_api.Models
         public Category Category { get; set; }
 
         [Required]
-        [JsonIgnore]
         public int CategoryId { get; set; }
 
         public bool Enabled { get; set; }

@@ -90,6 +90,7 @@ namespace personal_finances_two_api.Migrations
                         PaymentDate = c.DateTime(),
                         Closed = c.Boolean(nullable: false),
                         InvoiceStatus = c.Int(nullable: false),
+                        TotalValue = c.Double(nullable: false),
                         CreditCardId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)

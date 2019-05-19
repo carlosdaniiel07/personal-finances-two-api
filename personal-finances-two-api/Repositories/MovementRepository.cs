@@ -55,6 +55,7 @@ namespace personal_finances_two_api.Repositories
             using (AppDbContext context = new AppDbContext())
             {
                 return context.Movements
+                    .Include(m => m.Account)
                     .Include(m => m.Category)
                     .Include(m => m.Subcategory)
                     .Include(m => m.Project)
@@ -74,6 +75,7 @@ namespace personal_finances_two_api.Repositories
             {
                 return context.Movements
                     .Include(m => m.Account)
+                    .Include(m => m.Category)
                     .Include(m => m.Subcategory)
                     .Include(m => m.Project)
                     .Include(m => m.Invoice.CreditCard)
@@ -93,6 +95,7 @@ namespace personal_finances_two_api.Repositories
                 return context.Movements
                     .Include(m => m.Account)
                     .Include(m => m.Category)
+                    .Include(m => m.Subcategory)
                     .Include(m => m.Project)
                     .Include(m => m.Invoice.CreditCard)
                 .Where(m => m.SubcategoryId.Equals(subcategoryId)).ToList();
@@ -112,8 +115,9 @@ namespace personal_finances_two_api.Repositories
                     .Include(m => m.Account)
                     .Include(m => m.Category)
                     .Include(m => m.Subcategory)
+                    .Include(m => m.Project)
                     .Include(m => m.Invoice.CreditCard)
-                .Where(m => m.ProjectId.Equals(projectId)).ToList();
+                .Where(m => m.ProjectId == projectId).ToList();
             }
         }
 
@@ -131,7 +135,8 @@ namespace personal_finances_two_api.Repositories
                     .Include(m => m.Category)
                     .Include(m => m.Subcategory)
                     .Include(m => m.Project)
-                .Where(m => m.InvoiceId.Equals(invoiceId)).ToList();
+                    .Include(m => m.Invoice.CreditCard)
+                .Where(m => m.InvoiceId == invoiceId).ToList();
             }
         }
 

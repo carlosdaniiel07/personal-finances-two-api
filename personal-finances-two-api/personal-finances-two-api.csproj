@@ -48,6 +48,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BCrypt.Net-Next, Version=3.1.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.3.1.3\lib\net472\BCrypt.Net-Next.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -137,13 +141,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\AuthenticationFilter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CreditCardsController.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\MovementsController.cs" />
-    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\SubcategoriesController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\TransfersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -152,7 +159,16 @@
     <Compile Include="Migrations\201904080523219_FirstMigration.Designer.cs">
       <DependentUpon>201904080523219_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905042340251_DatabaseAdjusts.cs" />
+    <Compile Include="Migrations\201905042340251_DatabaseAdjusts.Designer.cs">
+      <DependentUpon>201905042340251_DatabaseAdjusts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905100348365_AddingUserAndAccessLogEntities.cs" />
+    <Compile Include="Migrations\201905100348365_AddingUserAndAccessLogEntities.Designer.cs">
+      <DependentUpon>201905100348365_AddingUserAndAccessLogEntities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccessLog.cs" />
     <Compile Include="Models\Account .cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -164,38 +180,45 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Movement.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\RequestModel\InvoicePaymentModel.cs" />
     <Compile Include="Models\Subcategory.cs" />
     <Compile Include="Models\Transfer.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AccessLogRepository.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
     <Compile Include="Repositories\AppDbContext.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\CreditCardRepository.cs" />
+    <Compile Include="Repositories\InvoiceRepository.cs" />
     <Compile Include="Repositories\MovementRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\SubcategoryRepository.cs" />
     <Compile Include="Repositories\TransferRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\CreditCardService.cs" />
     <Compile Include="Services\Exceptions\InvalidOperationException.cs" />
     <Compile Include="Services\Exceptions\ObjectAlreadyExistsException.cs" />
     <Compile Include="Services\Exceptions\ObjectNotFoundException.cs" />
+    <Compile Include="Services\InvoiceService.cs" />
     <Compile Include="Services\MovementService.cs" />
     <Compile Include="Services\ProjectService.cs" />
-    <Compile Include="Services\SubcategoryService.cs" />
     <Compile Include="Services\TransferService.cs" />
+    <Compile Include="Services\SubcategoryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
+    <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
+    </None>
+    <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -206,6 +229,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201904080523219_FirstMigration.resx">
       <DependentUpon>201904080523219_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905042340251_DatabaseAdjusts.resx">
+      <DependentUpon>201905042340251_DatabaseAdjusts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905100348365_AddingUserAndAccessLogEntities.resx">
+      <DependentUpon>201905100348365_AddingUserAndAccessLogEntities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -46,6 +46,19 @@ namespace personal_finances_two_api.Repositories
         }
 
         /// <summary>
+        /// Get an account by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Account Get (int id, bool canBeDisabledAccount)
+        {
+            using (AppDbContext context = new AppDbContext())
+            {
+                return context.Accounts.SingleOrDefault(a => a.Id.Equals(id));
+            }
+        }
+
+        /// <summary>
         /// Get an account by Name
         /// </summary>
         /// <param name="id"></param>

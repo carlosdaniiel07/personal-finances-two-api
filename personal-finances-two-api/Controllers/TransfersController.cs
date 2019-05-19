@@ -6,6 +6,8 @@ using personal_finances_two_api.Services;
 
 namespace personal_finances_two_api.Controllers
 {
+    [AuthenticationFilter]
+    [RoutePrefix("api/transfers")]
     public class TransfersController : ApiController
     {
         private TransferService _service = new TransferService();
