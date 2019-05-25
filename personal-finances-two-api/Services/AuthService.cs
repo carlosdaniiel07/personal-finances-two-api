@@ -43,11 +43,14 @@ namespace personal_finances_two_api.Services
 
         private string Sha256Encrypt (string value)
         {
-            UTF8Encoding encoding = new UTF8Encoding();
-            SHA1CryptoServiceProvider hash = new SHA1CryptoServiceProvider();
-            byte[] hashedBytes = hash.ComputeHash(encoding.GetBytes(value));
+            var encoding = new UTF8Encoding();
+            var hasher = new SHA256Managed();
+            var hash = new StringBuilder();
 
-            return hashedBytes.ToString();
+            foreach (var aByte in hasher.ComputeHash(encoding.GetBytes(value)))
+                hash.Append(aByte.ToString("x2"));
+
+            return hash.ToString();
         }
     }
 }
