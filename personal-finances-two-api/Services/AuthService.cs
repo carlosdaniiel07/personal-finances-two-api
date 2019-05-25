@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
-
-using Liphsoft.Crypto.Argon2;
+using System.Security.Cryptography;
+using System.Text;
 
 using personal_finances_two_api.Models;
 using personal_finances_two_api.Repositories;
@@ -13,12 +12,11 @@ namespace personal_finances_two_api.Services
     {
         private UserRepository _userRepository = new UserRepository();
         private AccessLogRepository _accessLogRepository = new AccessLogRepository();
-        private PasswordHasher _argonHasher = new PasswordHasher();
 
         // Return the user's TOKEN
         public User Auth (User user)
         {
-            user.Password = Hash(user.Password);
+            user.Password = Sha256Encrypt(user.Password);
             var retrievedUser = _userRepository.Auth(user);
 
             if (retrievedUser != null)
@@ -43,17 +41,13 @@ namespace personal_finances_two_api.Services
             _accessLogRepository.Insert(accessLog);
         }
 
-        // Hash a password with the Argon2 lib
-        private string Hash (string password)
+        private string Sha256Encrypt (string value)
         {
-            string salt = "jWtoG33gflJY2U5d";
-            return _argonHasher.Hash(password, salt);
-        }
+            UTF8Encoding encoding = new UTF8Encoding();
+            SHA1CryptoServiceProvider hash = new SHA1CryptoServiceProvider();
+            byte[] hashedBytes = hash.ComputeHash(encoding.GetBytes(value));
 
-        // Compare a Hash with a plain text value
-        private bool CompareHash (string hash, string plainText)
-        {
-            return _argonHasher.Verify(hash, plainText);
+            return hashedBytes.ToString();
         }
     }
 }

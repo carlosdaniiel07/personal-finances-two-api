@@ -20,7 +20,7 @@ namespace personal_finances_two_api.Services
 
         public IEnumerable<Movement> GetMovements (int invoiceId)
         {
-            return _movementRepository.GetByInvoice(invoiceId);
+            return _movementRepository.GetByInvoice(invoiceId).OrderBy(m => m.AccountingDate).ToList();
         }
 
         public Invoice Get (int id)
@@ -122,45 +122,14 @@ namespace personal_finances_two_api.Services
 
         public static string GetInvoiceReferenceByAccountingDate(int creditCardClosureDay, DateTime accountingDate)
         {
-            List<DateTime[]> ranges = new List<DateTime[]>();
-            var accountingYear = accountingDate.Year;
+            var format = "MMM/yyyy";
+            DateTime minDate = new DateTime(accountingDate.Year, accountingDate.Month, creditCardClosureDay);
+            DateTime maxDate = minDate.AddDays(30);
 
-            // Range (min date x max date)
-            for (var monthNumber = 1; monthNumber <= 12; monthNumber++)
-            {
-                DateTime minDate, maxDate;
-                int day, month, year;
-
-                // Min date
-                if (monthNumber.Equals(1))
-                {
-                    year = accountingYear - 1;
-                    month = 12;
-                }
-                else
-                {
-                    year = accountingYear;
-                    month = monthNumber - 1;
-                }
-
-                day = (DateTime.DaysInMonth(year, month) < creditCardClosureDay ? DateTime.DaysInMonth(year, month) : creditCardClosureDay);
-                minDate = new DateTime(year, month, day);
-
-                // Max date
-                year = accountingYear;
-                month = monthNumber;
-                day = (DateTime.DaysInMonth(year, month)) < creditCardClosureDay ? DateTime.DaysInMonth(year, month) : creditCardClosureDay;
-
-                maxDate = new DateTime(year, month, day);
-
-                ranges.Add(new DateTime[] { minDate, maxDate });
-            }
-
-            foreach (var range in ranges)
-                if (accountingDate > range[0] && accountingDate <= range[1])
-                    return string.Concat(range[1].ToString("MMM"), "/", range[1].ToString("yyyy"));
-
-            return string.Empty;
+            if (accountingDate > minDate && accountingDate <= maxDate)
+                return maxDate.ToString(format);
+            else
+                return accountingDate.ToString(format);
         }
 
         public Invoice GenerateInvoice (CreditCard creditCard, DateTime accountingDate)

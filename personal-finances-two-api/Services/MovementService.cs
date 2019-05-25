@@ -19,7 +19,7 @@ namespace personal_finances_two_api.Services
 
         public IEnumerable<Movement> GetAll ()
         {
-            return _repository.GetAll();
+            return _repository.GetAll().OrderByDescending(m => m.AccountingDate).ToList();
         }
 
         public Movement Get(int id)

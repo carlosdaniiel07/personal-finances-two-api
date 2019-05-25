@@ -38,7 +38,7 @@ namespace personal_finances_two_api.Services
 
         public IEnumerable<Movement> GetMovements (int accountId)
         {
-            return _movementRepository.GetByAccount(accountId);
+            return _movementRepository.GetByAccount(accountId).OrderByDescending(m => m.AccountingDate).ToList();
         }
 
         public void Insert (Account account)
